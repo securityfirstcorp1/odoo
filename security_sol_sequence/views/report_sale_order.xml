@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit_sol_seq" inherit_id="sale.report_saleorder_document" name="SOL Sequence">
+        <xpath expr="//t[@t-foreach='doc.order_lines_layouted()']/table/thead/tr/th[1]" position='before'>
+            <t t-set="seq_line_no" t-value="any([l.seq_line_no for l in doc.order_line])"/>
+            <th t-if="seq_line_no">SO-Line NO</th>
+        </xpath>
+        <xpath expr="//table/tbody[hasclass('sale_tbody')]/t/t[2]/tr/td[1]" position='before'>
+            <td t-if="l.seq_line_no">
+                <span t-field="l.seq_line_no" />
+            </td>
+        </xpath>
+    </template>
+</odoo>
