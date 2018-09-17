@@ -3,7 +3,7 @@
     <template id="report_invoice_document_mx" inherit_id="account.report_invoice_document" name="Invoice Line Sequence" priority="20">
         <xpath expr="//table[@name='invoice_line_table']/thead/tr/th" position="before">
             <t t-set="seq_line_no" t-value="any([l.seq_line_no for l in o.invoice_line_ids])"/>
-            <th t-if="seq_line_no">SO-Line NO</th>
+            <th t-if="seq_line_no">Sequence</th>
         </xpath>
         <xpath expr="//tr[@t-foreach='o.invoice_line_ids']//span[@t-field='l.name']/.." position="before">
             <td t-if="l.seq_line_no">
@@ -16,7 +16,7 @@
     <!--for report_invoice_layouted-->
         <xpath expr="//t[@name='lines_layouted']/table/thead/tr/th" position="before">
             <t t-set="seq_line_no" t-value="any([l.seq_line_no for l in o.invoice_line_ids])"/>
-            <th t-if="seq_line_no">SO-Line NO</th>
+            <th t-if="seq_line_no">Sequence</th>
         </xpath>
         <xpath expr="//t[@t-as='layout_category']/t[@t-as='l']/tr/td[1]" position="before">
             <td t-if="l.seq_line_no">

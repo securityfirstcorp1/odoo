@@ -13,12 +13,12 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    seq_line_no = fields.Char('SO-Line NO', help="10 sol-line 1 and 20 sol-line 2, etc.....")
+    seq_line_no = fields.Char('Sequence', help="10 and 20 , etc.....")
 
     @api.model
     def create(self, values):
         line = super(SaleOrderLine, self).create(values)
-        line.seq_line_no = '%s SO-line %s' % (line.order_id.next_line_no*10, line.order_id.next_line_no)
+        line.seq_line_no = line.sequence*line.order_id.next_line_no
         line.order_id.next_line_no = line.order_id.next_line_no+1
         return line
 
