@@ -13,18 +13,19 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    seq_line_no = fields.Char('Item', help="10 and 20 , etc.....")
 
-    @api.model
-    def create(self, values):
-        line = super(SaleOrderLine, self).create(values)
-        line.seq_line_no = line.sequence*line.order_id.next_line_no
-        line.order_id.next_line_no = line.order_id.next_line_no+1
-        return line
+    @api.depends('order_id.amount_untaxed')
+    def _compute_sol_line_sequence(self):
+        for sol in self:
+            if not sol.seq_line_no:
+                sol.seq_line_no = max(sol.order_id.order_line.mapped('seq_line_no')) + 10
+
+    seq_line_no = fields.Integer(string='Item', store=True, readonly=True, compute="_compute_sol_line_sequence", help="Sequencial item number for order lines (10, 20, 30, 40, etc.....)")
+
 
     @api.multi
     def _prepare_invoice_line(self, qty):
         self.ensure_one()
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
-        res['seq_line_no'] = self.seq_line_no
+        res['seq_line_no'] = str(self.seq_line_no)
         return res
