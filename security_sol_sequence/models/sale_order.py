@@ -13,7 +13,7 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    seq_line_no = fields.Char('Sequence', help="10 and 20 , etc.....")
+    seq_line_no = fields.Char('Item', help="10 and 20 , etc.....")
 
     @api.model
     def create(self, values):
