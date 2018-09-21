@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_line_seq" model="ir.ui.view">
+        <field name="name">Sale Order Line Sequence</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+                <field name="next_line_no" invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='sequence']" position="after">
+                <field name="seq_line_no" orce_save="1" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='sequence']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//form//field[@name='product_id']" position="before">
+                <field name="seq_line_no" force_save="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
